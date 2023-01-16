@@ -26,3 +26,12 @@ export async function getUserById(id) {
     return { error };
   }
 }
+
+export async function deleteUserById(id) {
+  try {
+    const user = await prisma.user.deleteUserById({ where: {id}});
+    return { user };
+  } catch (error) {
+    return { error };
+  }
+}
