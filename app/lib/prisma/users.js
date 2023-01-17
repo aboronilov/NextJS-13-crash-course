@@ -20,7 +20,10 @@ export async function createUser(user) {
 
 export async function getUserById(id) {
   try {
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: { tweets: true },
+    });
     return { user };
   } catch (error) {
     return { error };
@@ -29,8 +32,8 @@ export async function getUserById(id) {
 
 export async function deleteUserById(id) {
   try {
-    const user = await prisma.user.deleteUserById({ where: {id}});
-    return { user };
+    await prisma.user.deleteUserById({ where: { id } });
+    return { msg: "user deleted" };
   } catch (error) {
     return { error };
   }
